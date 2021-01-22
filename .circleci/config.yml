@@ -15,7 +15,7 @@ jobs:
           path: target/universal/samplescala.zip
           destination: samplescala
       - save_cache:
-          key: sbt-cache
+          key: sbt-cache-2
           paths:
             - "/tmp/.ivy2/cache"
             - "/tmp/.sbt"
