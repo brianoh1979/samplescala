@@ -39,7 +39,6 @@ jobs:
     steps:   
       - run:
           command: |
-              cp target/universal/samplescala.zip target/universal/$ARTIFACT_BUILD
               aws s3 cp target/universal/$ARTIFACT_BUILD s3://briansrv3-data/builds/samplescala/ --metadata {\"git_sha1\":\"$CIRCLE_SHA1\"}
 
 workflows:
