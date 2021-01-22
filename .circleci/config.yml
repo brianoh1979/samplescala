@@ -1,7 +1,7 @@
 \version: 2
 jobs:
   build:
-    working_directory: /tmp/samplescala
+    working_directory: ~/samplescala
     machine: true
     resource_class: brianoh1979/brian-runner
     steps:
@@ -22,7 +22,7 @@ jobs:
             - "/tmp/.m2"
 
   deploy:
-    working_directory: /tmp/samplescala
+    working_directory: ~/samplescala
     machine: true
     resource_class: brianoh1979/brian-runner
     steps:   
