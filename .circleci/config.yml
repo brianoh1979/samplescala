@@ -8,20 +8,9 @@ jobs:
       - SBT_VERSION: 1.0.4
     steps:
       - run: echo 'export ARTIFACT_BUILD=$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM.zip' >> $BASH_ENV
-      - run:
-          name: Get sbt binary
-          command: |
-                    apt update && apt install -y curl
-                    curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb
-                    dpkg -i sbt-$SBT_VERSION.deb
-                    rm sbt-$SBT_VERSION.deb
-                    apt-get update
-                    apt-get install -y sbt python-pip git
-                    pip install awscli
-                    apt-get clean && apt-get autoclean
       - checkout
-      - restore_cache:
-          key: sbt-cache
+#      - restore_cache:
+#          key: sbt-cache
       - run:
           name: Compile samplescala dist package
           command: cat /dev/null | sbt clean update dist
@@ -34,8 +23,22 @@ jobs:
             - "~/.ivy2/cache"
             - "~/.sbt"
             - "~/.m2"
-      - deploy:
-          command: |
-              mv target/universal/samplescala.zip $CIRCLE_ARTIFACTS/$ARTIFACT_BUILD
-              aws s3 cp $CIRCLE_ARTIFACTS/$ARTIFACT_BUILD s3://briansrv3-data/builds/samplescala/ --metadata {\"git_sha1\":\"$CIRCLE_SHA1\"}
 
+  deploy:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner
+    steps:
+      - run:
+          command: |
+              cp target/universal/samplescala.zip target/universal/$ARTIFACT_BUILD
+              aws s3 cp target/universal/$ARTIFACT_BUILD s3://briansrv3-data/builds/samplescala/ --metadata {\"git_sha1\":\"$CIRCLE_SHA1\"}
+
+workflows:
+  version: 2
+  build_test:
+    jobs:
+      - build
+      - deploy:
+         requires:
+           - build
