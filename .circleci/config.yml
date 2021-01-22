@@ -2,23 +2,21 @@ version: 2
 jobs:
   build:
     working_directory: ~/samplescala
-    docker:
-      - image: openjdk:8
-    environment:
-      - SBT_VERSION: 1.0.4
+    machine: true
+    resource_class: brianoh1979/brian-runner
     steps:
       - run: echo 'export ARTIFACT_BUILD=$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM.zip' >> $BASH_ENV
-      - run:
-          name: Get sbt binary
-          command: |
-                    apt update && apt install -y curl
-                    curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb
-                    dpkg -i sbt-$SBT_VERSION.deb
-                    rm sbt-$SBT_VERSION.deb
-                    apt-get update
-                    apt-get install -y sbt python-pip git
-                    pip install awscli
-                    apt-get clean && apt-get autoclean
+#      - run:
+#          name: Get sbt binary
+#          command: |
+#                    apt update && apt install -y curl
+#                    curl -L -o sbt-1.0.4.deb https://dl.bintray.com/sbt/debian/sbt-1.0.4.deb
+#                    dpkg -i sbt-1.0.4.deb
+#                    rm sbt-1.0.4.deb
+#                    apt-get update
+#                    apt-get install -y sbt python-pip git
+#                    pip install awscli
+#                    apt-get clean && apt-get autoclean
       - checkout
       - restore_cache:
           key: sbt-cache
