@@ -6,19 +6,8 @@ jobs:
     resource_class: brianoh1979/brian-runner
     steps:
       - run: echo 'export ARTIFACT_BUILD=$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM.zip' >> $BASH_ENV
-#      - run:
-#          name: Get sbt binary
-#          command: |
-#                    apt update && apt install -y curl
-#                    curl -L -o sbt-1.0.4.deb https://dl.bintray.com/sbt/debian/sbt-1.0.4.deb
-#                    dpkg -i sbt-1.0.4.deb
-#                    rm sbt-1.0.4.deb
-#                    apt-get update
-#                    apt-get install -y sbt python-pip git
-#                    pip install awscli
-#                    apt-get clean && apt-get autoclean
-#      - restore_cache:
-#          key: sbt-cache
+      - restore_cache:
+          key: sbt-cache
       - run:
           name: Compile samplescala dist package
           command: cat /dev/null | sbt clean update dist
