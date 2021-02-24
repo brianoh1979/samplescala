@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/samplescala
+    working_directory: ~/environment/samplescala
     machine: true
     resource_class: brianoh1979/brian-runner
     steps:
