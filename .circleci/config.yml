@@ -1,4 +1,4 @@
-\version: 2
+version: 2
 jobs:
   build:
     working_directory: ~/samplescala
@@ -6,8 +6,8 @@ jobs:
     resource_class: brianoh1979/brian-runner
     steps:
       - run: echo 'export ARTIFACT_BUILD=$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM.zip' >> $BASH_ENV
-#      - restore_cache:
-#          key: sbt-cache-2
+      - restore_cache:
+          key: sbt-cache-2
       - run:
           name: Compile samplescala dist package
           command: cat /dev/null | sbt clean update dist
@@ -15,7 +15,7 @@ jobs:
           path: target/universal/samplescala.zip
           destination: samplescala
       - save_cache:
-          key: sbt-cache-3
+          key: sbt-cache-2
           paths:
             - "/tmp/.ivy2/cache"
             - "/tmp/.sbt"
