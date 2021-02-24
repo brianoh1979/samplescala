@@ -10,10 +10,7 @@ jobs:
           key: sbt-cache-2
       - run:
           name: Compile samplescala dist package
-          command: cat /dev/null | sbt clean update compile 
-      - store_artifacts:
-          path: target/universal/samplescala.zip
-          destination: samplescala
+          command: cat /dev/null | sbt clean update compile package 
       - save_cache:
           key: sbt-cache-2
           paths:
@@ -21,20 +18,8 @@ jobs:
             - "/tmp/.sbt"
             - "/tmp/.m2"
 
-  deploy:
-    working_directory: ~/samplescala
-    machine: true
-    resource_class: brianoh1979/brian-runner
-    steps:   
-      - run:
-          command: |
-              aws s3 cp target/universal/samplescala.zip s3://briansrv3-data/builds/samplescala/ --metadata {\"git_sha1\":\"$CIRCLE_SHA1\"}
-
 workflows:
   version: 2
   build_test:
     jobs:
       - build
-      - deploy:
-         requires:
-           - build
