@@ -10,7 +10,7 @@ jobs:
           key: sbt-cache-2
       - run:
           name: Compile samplescala dist package
-          command: cat /dev/null | sbt clean 
+          command: cat /dev/null | sbt clean update compile 
       - store_artifacts:
           path: target/universal/samplescala.zip
           destination: samplescala
