@@ -5,12 +5,11 @@ jobs:
     machine: true
     resource_class: brianoh1979/brian-runner
     steps:
-      - run: echo 'export ARTIFACT_BUILD=$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM.zip' >> $BASH_ENV
       - restore_cache:
           key: sbt-cache-2
       - run:
           name: Compile samplescala dist package
-          command: cat /dev/null | sbt clean update compile package 
+          command: cat /dev/null | sbt clean update compile package run 
       - save_cache:
           key: sbt-cache-2
           paths:
