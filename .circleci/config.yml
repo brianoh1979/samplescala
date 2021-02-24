@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/environment/samplescala
+    working_directory: ~/samplescala
     machine: true
     resource_class: brianoh1979/brian-runner
     steps:
@@ -9,7 +9,7 @@ jobs:
           key: sbt-cache-2
       - run:
           name: Compile samplescala dist package
-          command: cat /dev/null | sbt clean update compile package run 
+          command: cat /dev/null | sbt clean update compile package  
       - save_cache:
           key: sbt-cache-2
           paths:
