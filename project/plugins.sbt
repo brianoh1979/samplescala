@@ -1,1 +1,1 @@
-addSbtPlugin("com.typesafe.akka" % "akka-sbt-plugin" % "2.1.0-RC2")
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.4")
