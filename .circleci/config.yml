@@ -12,8 +12,8 @@ jobs:
       - run: ls -la /var/run/docker.sock
       - run: |
            TAG=0.1.$CIRCLE_BUILD_NUM
-            docker build -t circleci-demo-docker3:$TAG .
-            docker tag circleci-demo-docker3:$TAG brianoh1979/bohruby:$TAG
+            docker build -t $DOCKER_LOGIN/circleci-demo-docker3 -t $DOCKER_LOGIN/circleci-demo-docker3:$TAG .
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin docker push $DOCKER_LOGIN/circleci-demo-docker3
 #      - run: echo 'export ARTIFACT_BUILD=$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM.zip' >> $BASH_ENV
 #      - run:
 #          name: Get sbt binary
