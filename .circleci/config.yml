@@ -15,35 +15,113 @@ jobs:
             docker build -t $DOCKER_LOGIN/circleci-demo-docker3 -t $DOCKER_LOGIN/circleci-demo-docker3:$TAG .
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin 
             docker push $DOCKER_LOGIN/circleci-demo-docker3
-#      - run: echo 'export ARTIFACT_BUILD=$CIRCLE_PROJECT_REPONAME-$CIRCLE_BUILD_NUM.zip' >> $BASH_ENV
-#      - run:
-#          name: Get sbt binary
-#          command: |
-#                    apt update && apt install -y curl
-#                    curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb
-#                    dpkg -i sbt-$SBT_VERSION.deb
-#                    rm sbt-$SBT_VERSION.deb
-#                    apt-get update
-#                    apt-get install -y sbt python-pip git
-#                    pip install awscli
-#                    apt-get clean && apt-get autoclean
-#      - checkout
-#      - restore_cache:
-#          key: sbt-cache
-#      - run:
-#          name: Compile samplescala dist package
-#          command: cat /dev/null | sbt clean update dist
-#      - store_artifacts:
-#          path: target/universal/samplescala.zip
-#          destination: samplescala
-#      - save_cache:
-#          key: sbt-cache
-#          paths:
-#            - "~/.ivy2/cache"
-#            - "~/.sbt"
-#            - "~/.m2"
-#      - deploy:
-#          command: |
-#              mv target/universal/samplescala.zip $CIRCLE_ARTIFACTS/$ARTIFACT_BUILD
-#              aws s3 cp $CIRCLE_ARTIFACTS/$ARTIFACT_BUILD s3://briansrv3-data/builds/samplescala/ --metadata {\"git_sha1\":\"$CIRCLE_SHA1\"}
+
       
+  build1:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - restore_cache:
+          key: sbt-cache
+      - run:
+          name: Compile samplescala dist package
+          command: cat /dev/null | sbt clean update dist
+      - store_artifacts:
+          path: target/universal/samplescala.zip
+          destination: samplescala
+      - save_cache:
+          key: sbt-cache
+          paths:
+            - "~/.ivy2/cache"
+            - "~/.sbt"
+            - "~/.m2"
+      
+  build2:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: | 
+            echo "Hello World!"
+            sleep 20
+
+  build3:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: | 
+            echo "Hello World!"
+            sleep 20
+
+  build4:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: | 
+            echo "Hello World!"
+            sleep 20
+
+  build5:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: | 
+            echo "Hello World!"
+            sleep 20 
+
+  build6:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: | 
+            echo "Hello World!"
+            sleep 20
+
+  build7:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: | 
+            echo "Hello World!"
+            sleep 20
+
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - build1
+      - build2
+      - build3
+      - build4
+      - build5
+      - build6
+      - build7
