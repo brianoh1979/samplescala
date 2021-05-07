@@ -27,9 +27,12 @@ jobs:
       - checkout
       - restore_cache:
           key: sbt-cache
-      - run:
-          name: Compile samplescala dist package
-          command: cat /dev/null | sbt clean update dist
+ #     - run:
+ #         name: Compile samplescala dist package
+ #         command: cat /dev/null | sbt clean update dist
+      - run: |
+            echo "Hello World!"
+            sleep 20
       - store_artifacts:
           path: target/universal/samplescala.zip
           destination: samplescala
@@ -120,8 +123,8 @@ workflows:
       - build
       - build1
       - build2
-      - build3
-      - build4
-      - build5
-      - build6
-      - build7
+#      - build3
+#      - build4
+#      - build5
+#      - build6
+#      - build7
