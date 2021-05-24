@@ -12,8 +12,8 @@ jobs:
       - run:
           name: Install podman
           command: |
-            echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' | sudo tee -a /etc/apt/sources.list.d/podman.list
-            curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/Release.key | sudo apt-key add -
+            echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' | tee -a /etc/apt/sources.list.d/podman.list
+            curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/Release.key | apt-key add -
             apt-get update && apt-get install -y podman
       - run:
           name: Apply settings for podman
