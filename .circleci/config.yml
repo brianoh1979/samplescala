@@ -37,8 +37,7 @@ jobs:
       - run:
           name: Build image
           command: |
-            /tmp/img build -h
-            /tmp/img build -f build -t r.j3ss.co/img .
+            /tmp/img build -f PATH/Dockerfile -t r.j3ss.co/img .
  #     - run: ls -la /var/run/docker.sock
  #     - run: |
  #          TAG=0.1.$CIRCLE_BUILD_NUM
