@@ -33,6 +33,7 @@ jobs:
 #              [storage]
 #              driver = "vfs"
 #            EOF
+      - run: apt-get install -y uidmap
       - run: curl -fSL "https://github.com/genuinetools/img/releases/download/v0.5.7/img-linux-amd64" -o "/tmp/img" && chmod a+x "/tmp/img"
       - run:
           name: Build image
