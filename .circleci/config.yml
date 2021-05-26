@@ -33,11 +33,11 @@ jobs:
 #              [storage]
 #              driver = "vfs"
 #            EOF
-      - run: curl -fSL "https://github.com/genuinetools/img/releases/download/v0.5.7/img-linux-amd64" -o "/usr/local/bin/img" && chmod a+x "/usr/local/bin/img"
+      - run: curl -fSL "https://github.com/genuinetools/img/releases/download/v0.5.7/img-linux-amd64" -o "/tmp/img" && chmod a+x "/tmp/img"
       - run:
           name: Build image
           command: |
-            img build . -t example/test-podman-build:latest
+            /tmp/img build . -t example/test-podman-build:latest
  #     - run: ls -la /var/run/docker.sock
  #     - run: |
  #          TAG=0.1.$CIRCLE_BUILD_NUM
