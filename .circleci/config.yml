@@ -9,34 +9,34 @@ jobs:
       - SBT_VERSION: 1.0.4
     steps:
       - checkout
-#      - run:
-#          name: Install podman
-#          command: |
-#            echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' | tee -a /etc/apt/sources.list.d/podman.list
-#            curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/Release.key | apt-key add -
-#            apt-get update && apt-get install -y podman
-#      - run:
-#          name: Apply settings for podman
-#          command: |
-#            cat \<< EOF | sudo tee /etc/containers/registries.conf.d/docker.conf
-#              unqualified-search-registries = ["docker.io"]
-#            EOF
+      - run:
+          name: Install podman
+          command: |
+            echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' | tee -a /etc/apt/sources.list.d/podman.list
+            curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/Release.key | apt-key add -
+            apt-get update && apt-get install -y podman
+      - run:
+          name: Apply settings for podman
+          command: |
+            cat \<< EOF | tee /etc/containers/registries.conf.d/docker.conf
+              unqualified-search-registries = ["docker.io"]
+            EOF
 
-#            cat \<< EOF | sudo tee /etc/containers/containers.conf
-#              [engine]
-#              cgroup_manager = "cgroupfs"
-#              storage_driver = "vfs"
-#              events_logger = "file"
-#            EOF
+            cat \<< EOF | tee /etc/containers/containers.conf
+              [engine]
+              cgroup_manager = "cgroupfs"
+              storage_driver = "vfs"
+              events_logger = "file"
+            EOF
 
-#            cat \<< EOF | sudo tee /etc/containers/storage.conf
-#              [storage]
-#              driver = "vfs"
-#            EOF
+            cat \<< EOF | tee /etc/containers/storage.conf
+              [storage]
+              driver = "vfs"
+            EOF
       - run:
           name: Build image
           command: |
-            sudo podman build . -t example/test-podman-build:latest
+            podman build . -t example/test-podman-build:latest
  #     - run: ls -la /var/run/docker.sock
  #     - run: |
  #          TAG=0.1.$CIRCLE_BUILD_NUM
