@@ -9,8 +9,9 @@ jobs:
       - SBT_VERSION: 1.0.4
     steps:
       - checkout
-#      - run: apt-get install -y uidmap
-#      - run: curl -fSL "https://github.com/genuinetools/img/releases/download/v0.5.7/img-linux-amd64" -o "/tmp/img" && chmod a+x "/tmp/img"
+      - run: cat /etc/group
+      - run: cat /etc/sudoers
+ #     - run: curl -fSL "https://github.com/genuinetools/img/releases/download/v0.5.7/img-linux-amd64" -o "/tmp/img" && chmod a+x "/tmp/img"
       - run:
           name: Install podman
           command: |
@@ -160,9 +161,9 @@ workflows:
     jobs:
       - build
  #     - build1
-      - build2
-      - build3
-      - build4
-      - build5
-      - build6
-      - build7
+ #     - build2
+ #     - build3
+ #     - build4
+ #     - build5
+ #     - build6
+ #     - build7
