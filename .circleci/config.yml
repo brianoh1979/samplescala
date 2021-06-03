@@ -13,7 +13,6 @@ jobs:
       - run: cat /etc/passwd
       - run: cat /etc/group
       - run: sudo cat /etc/sudoers
- #     - run: curl -fSL "https://github.com/genuinetools/img/releases/download/v0.5.7/img-linux-amd64" -o "/tmp/img" && chmod a+x "/tmp/img"
       - run:
           name: Install podman
           command: |
