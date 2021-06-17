@@ -1,66 +1,10 @@
 #Comment to trigger commit
 version: 2
 jobs:
-  build:
-    working_directory: ~/samplescala
-    machine: true
-    resource_class: brianoh1979/brian-runner
-    environment:
-      - SBT_VERSION: 1.0.4
-    steps:
-      - checkout
-      - run: groups circleci
-      - run: cat /etc/passwd
-      - run: cat /etc/group
-      - run: sudo cat /etc/sudoers
-      - run:
-          name: Install podman
-          command: |
-            echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' | sudo tee -a /etc/apt/sources.list.d/podman.list
-            curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/Release.key | sudo apt-key add -
-            sudo apt-get update && sudo apt-get install -y podman
-      - run:
-          name: Apply settings for podman
-          command: |
-            cat \<< EOF | sudo tee /etc/containers/registries.conf.d/docker.conf
-              unqualified-search-registries = ["docker.io"]
-            EOF
-
-            cat \<< EOF | sudo tee /etc/containers/containers.conf
-              [engine]
-              cgroup_manager = "cgroupfs"
-              storage_driver = "vfs"
-              events_logger = "file"
-            EOF
-
-            cat \<< EOF | sudo tee /etc/containers/storage.conf
-              [storage]
-              driver = "vfs"
-            EOF
-      - run:
-          name: Build image
-          command: |
-            sudo podman build . -t example/test-podman-build:latest
-      - run:
-          name: Push image to Docker Hub
-          command: |
-            echo $DOCKER_PWD | sudo podman login -u $DOCKER_LOGIN --password-stdin docker.io
-            sudo podman push example/test-podman-build:latest docker://example/test-podman-build:lastest
-      - run:
-          name: Build image
-          command: |
-            podman build --isolation chroot -t example/test-podman-build:latest .
- #     - run: |
- #          TAG=0.1.$CIRCLE_BUILD_NUM
- #           docker build -t $DOCKER_LOGIN/circleci-demo-docker3 -t $DOCKER_LOGIN/circleci-demo-docker3:$TAG .
- #           echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin 
- #           docker push $DOCKER_LOGIN/circleci-demo-docker3
-
-      
   build1:
     working_directory: ~/samplescala
     machine: true
-    resource_class: brianoh1979/brian-runner
+    resource_class: brianoh1979/brian-runner-k8s
     environment:
       - SBT_VERSION: 1.0.4
     steps:
@@ -82,11 +26,31 @@ jobs:
             - "~/.ivy2/cache"
             - "~/.sbt"
             - "~/.m2"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  build21:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: |
+           TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t $DOCKER_LOGIN/circleci-demo-docker3 -t $DOCKER_LOGIN/circleci-demo-docker3:$TAG .
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push $DOCKER_LOGIN/circleci-demo-docker3
       
   build2:
     working_directory: ~/samplescala
     machine: true
-    resource_class: brianoh1979/brian-runner
+    resource_class: brianoh1979/brian-runner-k8s
     environment:
       - SBT_VERSION: 1.0.4
     steps:
@@ -98,7 +62,7 @@ jobs:
   build3:
     working_directory: ~/samplescala
     machine: true
-    resource_class: brianoh1979/brian-runner
+    resource_class: brianoh1979/brian-runner-k8s
     environment:
       - SBT_VERSION: 1.0.4
     steps:
@@ -110,7 +74,7 @@ jobs:
   build4:
     working_directory: ~/samplescala
     machine: true
-    resource_class: brianoh1979/brian-runner
+    resource_class: brianoh1979/brian-runner-k8s
     environment:
       - SBT_VERSION: 1.0.4
     steps:
@@ -122,7 +86,7 @@ jobs:
   build5:
     working_directory: ~/samplescala
     machine: true
-    resource_class: brianoh1979/brian-runner
+    resource_class: brianoh1979/brian-runner-k8s
     environment:
       - SBT_VERSION: 1.0.4
     steps:
@@ -134,7 +98,7 @@ jobs:
   build6:
     working_directory: ~/samplescala
     machine: true
-    resource_class: brianoh1979/brian-runner
+    resource_class: brianoh1979/brian-runner-k8s
     environment:
       - SBT_VERSION: 1.0.4
     steps:
@@ -146,7 +110,7 @@ jobs:
   build7:
     working_directory: ~/samplescala
     machine: true
-    resource_class: brianoh1979/brian-runner
+    resource_class: brianoh1979/brian-runner-k8s
     environment:
       - SBT_VERSION: 1.0.4
     steps:
@@ -155,16 +119,186 @@ jobs:
             echo "Hello World!"
             sleep 20
 
+  build8:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+  
+  build9:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+
+  build10:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+
+  build11:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+
+  build12:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+
+  build13:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+
+  build14:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+
+  build15:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+
+  build16:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+
+  build17:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+
+  build18:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+
+  build19:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
+
+  build20:
+    working_directory: ~/samplescala
+    machine: true
+    resource_class: brianoh1979/brian-runner-k8s
+    environment:
+      - SBT_VERSION: 1.0.4
+    steps:
+      - checkout
+      - run: |
+            echo "Hello World!"
+            sleep 20
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
- #     - build1
- #     - build2
- #     - build3
- #     - build4
- #     - build5
- #     - build6
- #     - build7
+      - build1
+      - build2
+      - build3
+      - build4
+      - build5
+      - build6
+      - build7
+      - build8
+      - build9
+      - build10
+      - build11
+      - build12
+      - build13
+      - build14
+      - build15
+      - build16
+      - build17
+      - build18
+      - build19
+      - build20
+      - build21:
+          requires:
+            - build1
