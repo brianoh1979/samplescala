@@ -40,9 +40,9 @@ jobs:
           at: .
       - run: |
            TAG=0.1.$CIRCLE_BUILD_NUM
-            docker build -t $DOCKER_LOGIN/circleci-demo-docker3 -t $DOCKER_LOGIN/circleci-demo-docker3:$TAG .
+            docker build -t $DOCKER_LOGIN/circleci-demo-docker3:$TAG .
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
-            docker push $DOCKER_LOGIN/circleci-demo-docker3
+            docker push $DOCKER_LOGIN/circleci-demo-docker3:$TAG
       
   build2:
     working_directory: ~/samplescala
@@ -277,25 +277,44 @@ workflows:
   build_and_test:
     jobs:
       - build1
-#      - build2
-#      - build3
-#      - build4
-#      - build5
-#      - build6
-#      - build7
-#      - build8
-#      - build9
-#      - build10
-#      - build11
-#      - build12
-#      - build13
-#      - build14
-#      - build15
-#      - build16
-#      - build17
-#      - build18
-#      - build19
-#      - build20
+      - build2
+      - build3
+      - build4
+      - build5
+      - build6
+      - build7
+      - build8
+      - build9
+      - build10
+      - build11
+      - build12
+      - build13
+      - build14
+      - build15
+      - build16
+      - build17
+      - build18
+      - build19
+      - build20
       - build21:
           requires:
             - build1
+            - build2
+            - build3
+            - build4
+            - build5
+            - build6
+            - build7
+            - build8
+            - build9
+            - build10
+            - build11
+            - build12
+            - build13
+            - build14
+            - build15
+            - build16
+            - build17
+            - build18
+            - build19
+            - build20
