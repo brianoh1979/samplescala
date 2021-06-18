@@ -34,7 +34,7 @@ jobs:
   build21:
     working_directory: ~/samplescala
     machine: true
-    resource_class: brianoh1979/brian-runner
+    resource_class: brianoh1979/brian-runner-vm
     environment:
       - SBT_VERSION: 1.0.4
     steps:
