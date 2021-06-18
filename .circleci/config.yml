@@ -9,9 +9,6 @@ jobs:
       - SBT_VERSION: 1.0.4
     steps:
       - checkout
-      - run: curl -L -o sbt-1.4.7.deb https://dl.bintray.com/sbt/debian/sbt-1.4.7.deb
-      - run: dpkg -i sbt-1.4.7.deb
-      - run: rm sbt-1.4.7.deb
       - restore_cache:
           key: sbt-cache
       - run:
@@ -283,25 +280,25 @@ workflows:
   build_and_test:
     jobs:
       - build1
-      - build2
-      - build3
-      - build4
-      - build5
-      - build6
-      - build7
-      - build8
-      - build9
-      - build10
-      - build11
-      - build12
-      - build13
-      - build14
-      - build15
-      - build16
-      - build17
-      - build18
-      - build19
-      - build20
+#      - build2
+#      - build3
+#      - build4
+#      - build5
+#      - build6
+#      - build7
+#      - build8
+#      - build9
+#      - build10
+#      - build11
+#      - build12
+#      - build13
+#      - build14
+#      - build15
+#      - build16
+#      - build17
+#      - build18
+#      - build19
+#      - build20
       - build21:
           requires:
             - build1
