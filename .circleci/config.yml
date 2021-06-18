@@ -9,6 +9,9 @@ jobs:
       - SBT_VERSION: 1.0.4
     steps:
       - checkout
+      - run: curl -L -o sbt-1.4.7.deb https://dl.bintray.com/sbt/debian/sbt-1.4.7.deb
+      - run: dpkg -i sbt-1.4.7.deb
+      - run: rm sbt-1.4.7.deb
       - restore_cache:
           key: sbt-cache
       - run:
